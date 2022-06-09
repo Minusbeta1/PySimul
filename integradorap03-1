@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jun  9 13:10:00 2022
+
+@author: PC
+"""
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 import pylab as pl
