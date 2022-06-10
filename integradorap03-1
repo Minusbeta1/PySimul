@@ -5,7 +5,6 @@ Created on Thu Jun  9 13:10:00 2022
 @author: PC
 """
 
-
 import numpy as np
 import matplotlib.pyplot as plt
 import pylab as pl
@@ -47,7 +46,7 @@ def IntP03_1(x,t):
     a11=-13
     a12=1
     a21=0
-    a22=-4
+    a22=-0.4
     x1=x[0]
     x2=x[1]
     
@@ -75,5 +74,3 @@ plt.figure(1)
 plt.plot(t,X[0,:])
 plt.figure(2)
 plt.plot(t,X[1,:])  
-plt.figure(3)
-plt.plot(X[0,:],X[1,:])
