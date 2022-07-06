@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jun  6 17:20:42 2022
+Created on Fri Jun 10 17:05:12 2022
 
 @author: minus
 """
@@ -8,6 +8,8 @@ Created on Mon Jun  6 17:20:42 2022
 import numpy as np
 import matplotlib.pyplot as plt
 #import pylab as pl
+import  math
+#math.pi
 
 def RK4 (f,x0,t):
     
@@ -44,36 +46,52 @@ def RK4 (f,x0,t):
 
 
 
-
-def Lotk(x,t):
+def Esfera(x,t):
+    
+    #parametros
+    
+    k=4.5
     alpha=1.1
-    beta=0.4
-    gamma=0.4
-    delta=0.1
+    beta=0.8
+    V=6
+    radio=t**-1
     
-    xdot=np.zeros(2)
+    xdot = np.zeros(3)
+    Ca=x[0]
+    Cb=x[1]
+    Cc=x[2]
+    r=k*V*(Ca**alpha)*(Cb**beta)
     
-    xdot[0]=alpha*x[0]-beta*x[0]*x[1]
-    xdot[1]=delta*x[0]*x[1]-gamma*x[1]
-
+    F_in=1
+    F_in2=1
+    f0=F_in+F_in2
+    
+    
+    
+    
+    xdot[0] = (F_in*Ca+F_in2*Cb-f0*Cc+r)/(math.pi*radio**2)
+          
+          
+          
     return xdot
 
-h=0.01
-x10=20
-x20=5
-t=np.arange(0,300+h,h)
-x0=np.array([x10,x20])
+    
 
 
+
+#condiciones iniciales
+h=0.001
+
+t=np.arange(0,50+h,h)
+x10=1
+x20=1
+x30=1
+x0=np.array([x10,x20,x30])
 #function
 
 
-f=lambda t,x: Lotk(x, t)
+f=lambda t,x: Esfera(x, t)
 
 X=RK4(f, x0, t)  
 plt.figure(1)
 plt.plot(t,X[0,:])
-plt.figure(2)
-plt.plot(t,X[1,:])  
-plt.figure(3)
-plt.plot(X[0,:],X[1,:])

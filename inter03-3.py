@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jun  6 17:20:42 2022
+Created on Fri Jun 10 15:41:06 2022
 
 @author: minus
 """
@@ -41,39 +41,37 @@ def RK4 (f,x0,t):
   return x
 
 
-
-
-
-
-def Lotk(x,t):
-    alpha=1.1
-    beta=0.4
-    gamma=0.4
-    delta=0.1
+def IntP03_3(x,t):
+    beta = 0.4
+    gamma = 0.04
     
-    xdot=np.zeros(2)
+    xdot=np.zeros(3)
     
-    xdot[0]=alpha*x[0]-beta*x[0]*x[1]
-    xdot[1]=delta*x[0]*x[1]-gamma*x[1]
-
+    s = x[0]
+    i = x[1]
+    r = x[2]
+    
+    N = s+i+r
+    
+    
+    xdot[0]= -beta*s*i/N
+    xdot[1]= beta*s*i/N-gamma*i
+    xdot[2]= gamma*i
     return xdot
 
-h=0.01
-x10=20
-x20=5
-t=np.arange(0,300+h,h)
-x0=np.array([x10,x20])
 
+h = 0.01
+t = np.arange(0,100+h,h)
+x0 = np.array([997,3,0])
 
-#function
+f=lambda t,x: IntP03_3(x, t)
+X= RK4(f,x0,t)
 
-
-f=lambda t,x: Lotk(x, t)
-
-X=RK4(f, x0, t)  
 plt.figure(1)
 plt.plot(t,X[0,:])
+
 plt.figure(2)
-plt.plot(t,X[1,:])  
+plt.plot(t,X[1,:])
+
 plt.figure(3)
-plt.plot(X[0,:],X[1,:])
+plt.plot(t,X[2,:])

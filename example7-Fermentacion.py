@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jun  6 17:20:42 2022
+Created on Tue Jun  7 15:38:07 2022
 
 @author: minus
 """
@@ -44,31 +44,50 @@ def RK4 (f,x0,t):
 
 
 
-
-def Lotk(x,t):
-    alpha=1.1
-    beta=0.4
-    gamma=0.4
-    delta=0.1
+def Fermentador(x,t):
     
-    xdot=np.zeros(2)
+    #parametros
+    umax=1.5
+    K=3
+    D=0.1
+    F=1 #wa
+    V=1 #wa
+    Y=0.9
+    if t <= 20 :
+        S_in = 18
+        
+    else:
+        S_in = 7
+        
+    X=x[0]
+    S=x[1]
     
-    xdot[0]=alpha*x[0]-beta*x[0]*x[1]
-    xdot[1]=delta*x[0]*x[1]-gamma*x[1]
-
+    mu = (umax*S)/(K+S)
+    
+    xdot = np.zeros(2)
+    
+    #xdot[0]=(f1/v)*(Ca1)-(f0/v)*Ca-r
+    #xdot[1]=(f2/v)*(Cb1)-(f0/v)*Cb-r
+    
+    xdot[0]=(-F/V)*X+Y*mu*X
+    
+    xdot[1]=(S_in-S)-mu*X
+    
+    
     return xdot
 
-h=0.01
-x10=20
-x20=5
+
+#condiciones iniciales
+x0=2
+y0=0.9
+s0=10
+h=0.1
 t=np.arange(0,300+h,h)
-x0=np.array([x10,x20])
-
-
+x0=np.array([x0,s0])
 #function
 
 
-f=lambda t,x: Lotk(x, t)
+f=lambda t,x: Fermentador(x, t)
 
 X=RK4(f, x0, t)  
 plt.figure(1)
@@ -77,3 +96,10 @@ plt.figure(2)
 plt.plot(t,X[1,:])  
 plt.figure(3)
 plt.plot(X[0,:],X[1,:])
+
+
+
+
+
+
+

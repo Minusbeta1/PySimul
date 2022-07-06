@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jun  6 17:20:42 2022
+Created on Fri Jun 10 15:41:07 2022
 
 @author: minus
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-#import pylab as pl
+import pylab as pl
 
 def RK4 (f,x0,t):
     
@@ -40,40 +40,37 @@ def RK4 (f,x0,t):
  # Return the array 
   return x
 
-
-
-
-
-
-def Lotk(x,t):
-    alpha=1.1
-    beta=0.4
-    gamma=0.4
-    delta=0.1
+def IntP03_1(x,t):
+    
+    
+    a11=-13
+    a12=1
+    a21=0
+    a22=-0.4
+    x1=x[0]
+    x2=x[1]
     
     xdot=np.zeros(2)
     
-    xdot[0]=alpha*x[0]-beta*x[0]*x[1]
-    xdot[1]=delta*x[0]*x[1]-gamma*x[1]
+    xdot[0]=a11*x1+a12*x2
+    xdot[1]=a21*x1+a22*x2
 
     return xdot
 
 h=0.01
-x10=20
-x20=5
-t=np.arange(0,300+h,h)
+x10=50
+x20=60
+t=np.arange(0,10+h,h)
 x0=np.array([x10,x20])
 
 
 #function
 
 
-f=lambda t,x: Lotk(x, t)
+f=lambda t,x: IntP03_1(x, t)
 
 X=RK4(f, x0, t)  
 plt.figure(1)
 plt.plot(t,X[0,:])
 plt.figure(2)
 plt.plot(t,X[1,:])  
-plt.figure(3)
-plt.plot(X[0,:],X[1,:])

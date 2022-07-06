@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jun  6 17:20:42 2022
+Created on Wed Jun  8 17:31:20 2022
 
 @author: minus
 """
@@ -8,6 +8,8 @@ Created on Mon Jun  6 17:20:42 2022
 import numpy as np
 import matplotlib.pyplot as plt
 #import pylab as pl
+import  math
+#math.pi
 
 def RK4 (f,x0,t):
     
@@ -44,36 +46,42 @@ def RK4 (f,x0,t):
 
 
 
-
-def Lotk(x,t):
-    alpha=1.1
-    beta=0.4
-    gamma=0.4
-    delta=0.1
+def Cono(x,t):
     
-    xdot=np.zeros(2)
+    #parametros
+    R=3
+    H=8
+    C=0.5
+    F_in=3
+    h=x[0]
+        
     
-    xdot[0]=alpha*x[0]-beta*x[0]*x[1]
-    xdot[1]=delta*x[0]*x[1]-gamma*x[1]
-
+    xdot = np.zeros(1)
+    
+    #xdot[0]=(f1/v)*(Ca1)-(f0/v)*Ca-r
+    #xdot[1]=(f2/v)*(Cb1)-(f0/v)*Cb-r
+    
+    xdot[0]=((F_in-C*np.sqrt(h))*H**2)/(math.pi*R**2*h**2)
+          
+          
+          
     return xdot
 
-h=0.01
-x10=20
-x20=5
-t=np.arange(0,300+h,h)
-x0=np.array([x10,x20])
+    
 
 
+
+#condiciones iniciales
+h=0.001
+
+t=np.arange(0,50+h,h)
+x10=0.5
+x0=np.array([x10])
 #function
 
 
-f=lambda t,x: Lotk(x, t)
+f=lambda t,x: Cono(x, t)
 
 X=RK4(f, x0, t)  
 plt.figure(1)
 plt.plot(t,X[0,:])
-plt.figure(2)
-plt.plot(t,X[1,:])  
-plt.figure(3)
-plt.plot(X[0,:],X[1,:])
