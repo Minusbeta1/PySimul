@@ -9,34 +9,36 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
 
-def RK4(f,x0,t):
-    #Runge-Kutta method
-    dt=t[1]-t[0] #ste size
-    nt=t.size    #array size
-    nx=x0.size   #array size
-    x=np.zeros((nx,nt)) #zeros array
-    x[:,0]=x0           #initial condition
+def RK4 (f,x0,t):
     
     
-    #Starting method
-    for k in range(nt-1):
-        
-        #Define the method constants
-        
-        k1=dt*f(t[k], x[:,k])
-        k2=dt*f(t[k]+dt/2, x[:,k]+k1/2)
-        k3=dt*f(t[k]+dt/2,x[:,k]+k2/2)
-        k4=dt*f(t[k]+dt,x[:,k]+k3)
-        
-        #Adding terms
-        
-        dx=(k1 + 2*k2 + 2*k3 +k4)/6
-        
-        #Compute next value
-        x[:,k+1]=x[:,k]+dx
-        
-    #Return the array
-    return x
+    
+    # Runge- Kutta method 
+    
+  dt= t[1] - t[0]  # ste size 
+  nt = t.size  # array size 
+  nx  = x0.size  # array size 
+  x = np.zeros ((nx,nt))  # zeros array 
+  x[:,0] = x0   # Initial condition 
+    
+    # Starting method
+    
+  for k in range (nt - 1):
+
+# Define the method 
+        k1 = dt*f( t[k], x[:,k] )
+        k2 = dt*f( t[k] + dt/2, x[:, k] + k1/2 )
+        k3 = dt*f( t[k] + dt/2, x[:, k] + k2/2 ) 
+        k4 = dt*f( t[k] + dt, x[:, k] + k3 )
+
+# Adding temrs 
+        dx = (k1+2*k2+2*k3+k4)/6
+ 
+ # Compute next value 
+        x[:,k+1] = x[:,k] + dx
+ 
+ # Return the array 
+  return x
  
 
 
@@ -55,18 +57,21 @@ def system (x,t):
     pm=90
     gamma=0.03
     
-    xdot=np.zeros(4)
+
+    
     
     Xv=x[0]
     Xnv=x[1]
     Xd=x[2]
     P=x[3]
+
+
     
     u=(u0*(1+a1*P))/(b0+b3*P**3)
     k=c*P**n
     pi=pi0*(1-(P/pm)**m)
     
-    
+    xdot=np.zeros(4)
 
     
     xdot[0]=(u*P-k*P)*Xv
@@ -74,13 +79,21 @@ def system (x,t):
     xdot[2]=gamma*Xnv
     xdot[3]=(pi*P)*(Xv+Xnv)
     
+
     return xdot
+
+
 
 h=0.1
 t=np.arange(0,100+h,h)
-x10=0.5
-x0=np.array([x10])
+x10=50
+x20=50
+x30=50
+x40=50
+x0=np.array([x10,x20,x30,x40])
+
 f=lambda t,x: system(x, t)
+
 X=RK4(f,x0,t)
 plt.figure(1)
 plt.plot(t,X[0,:])
